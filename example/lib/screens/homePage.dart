@@ -5,7 +5,7 @@ import 'package:example/screens/sleep.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   static const route = '/';
   static const routename = 'HomePage';
@@ -17,24 +17,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final screens = [
-    Settings(),
-    Heart(),
-    Sleep(),
-    Measures(),
+    const Settings(),
+    const Heart(),
+    const Sleep(),
+    const Measures(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(HomePage.routename),
+        title: const Text(HomePage.routename),
       ),
       body: Center(child: screens[currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Heart'),

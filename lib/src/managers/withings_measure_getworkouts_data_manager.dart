@@ -3,22 +3,21 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsMeasureGetWorkoutsDataManager] is a class the manages the requests related to [WithingsMeasureGetWorkoutsData]
 class WithingsMeasureGetWorkoutsDataManager extends WithingsDataManager {
-  WithingsMeasureGetWorkoutsDataManager({required String accessToken})
-      : super(
-          accessToken: accessToken,
-        );
+  WithingsMeasureGetWorkoutsDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsMeasureGetWorkoutsData> fetch(
+      WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret = _extractWithingsMeasureGetWorkoutsData(response);
+    WithingsMeasureGetWorkoutsData ret =
+        _extractWithingsMeasureGetWorkoutsData(response);
     return ret;
   } // fetch
 
@@ -60,10 +59,6 @@ class WithingsMeasureGetWorkoutsDataManager extends WithingsDataManager {
   /// A private method that extracts [WithingsMeasureGetWorkoutsData] from the given response.
   WithingsMeasureGetWorkoutsData _extractWithingsMeasureGetWorkoutsData(
       dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsMeasureGetWorkoutsData.fromJson(response);
-    } else {
-      return WithingsMeasureGetWorkoutsData();
-    }
+    return WithingsMeasureGetWorkoutsData.fromJson(response);
   } // _extractWithingsMeasureGetworkoutsData
 } // WithingsMeasureGetWorkoutsDataManager

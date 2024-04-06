@@ -1,7 +1,10 @@
-import 'package:withings_flutter/src/data/withingsData.dart';
+import 'package:withings_flutter/src/data/withings_data.dart';
 
 /// [WithingsMeasureGetActivityData] is a class that provides daily aggregated activity data of a user
 class WithingsMeasureGetActivityData implements WithingsData {
+  /// Response status
+  int? status;
+
   /// Array of objects (Activities)
   List<Activities>? activities;
 
@@ -11,9 +14,11 @@ class WithingsMeasureGetActivityData implements WithingsData {
   /// Offset to use to retrieve the next data
   int? offset;
 
-  WithingsMeasureGetActivityData({this.activities, this.more, this.offset});
+  WithingsMeasureGetActivityData(
+      {this.status, this.activities, this.more, this.offset});
 
   WithingsMeasureGetActivityData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     if (json['status'] == 0 && json['body'] != null) {
       if (json['body']['activities'].isNotEmpty) {
         activities = <Activities>[];
@@ -29,6 +34,7 @@ class WithingsMeasureGetActivityData implements WithingsData {
   @override
   String toString() {
     return (StringBuffer('WithingsMeasureGetActivityData(')
+          ..write('status: $status, ')
           ..write('activities: $activities, ')
           ..write('more: $more, ')
           ..write('offset: $offset, ')
@@ -90,6 +96,30 @@ class Activities {
   /// Duration in seconds when heart rate was in a maximal zone. (Use 'dataFields' to request this data)
   int? hrZone3;
 
+  ///
+  String? deviceId;
+
+  ///
+  String? hashdeviceId;
+
+  /// Timezone
+  String? timeZone;
+
+  ///
+  int? modified;
+
+  ///
+  int? brand;
+
+  ///
+  int? modelId;
+
+  ///
+  String? model;
+
+  ///
+  bool? isTracker;
+
   Activities(
       {this.date,
       this.steps,
@@ -107,7 +137,17 @@ class Activities {
       this.hrZone0,
       this.hrZone1,
       this.hrZone2,
-      this.hrZone3});
+      this.hrZone3,
+      
+      this.deviceId,
+      this.hashdeviceId,
+      this.timeZone,
+      this.modified,
+      this.brand,
+      this.modelId,
+      this.model,
+      this.isTracker
+      });
 
   Activities.fromJson(Map<String, dynamic> json) {
     date = json['date'];
@@ -127,6 +167,15 @@ class Activities {
     hrZone1 = json['hr_zone_1'];
     hrZone2 = json['hr_zone_2'];
     hrZone3 = json['hr_zone_3'];
+
+    deviceId = json['deviceid'];
+    hashdeviceId=json['hash_deviceid'];
+    timeZone = json['timezone'];
+    modified = json['modified'];
+    brand = json['brand'];
+    modelId = json['modelid'];
+    model = json['model'];
+    isTracker = json['is_tracker'];
   }
 
   @override
@@ -149,6 +198,18 @@ class Activities {
           ..write('hr_zone_1: $hrZone1, ')
           ..write('hr_zone_2: $hrZone2, ')
           ..write('hr_zone_3: $hrZone3, ')
+
+          ..write('deviceId: $deviceId, ')
+          ..write('hashdeviceId: $hashdeviceId, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('modified: $modified, ')
+          ..write('brand: $brand, ')
+          ..write('modelId: $modelId, ')
+          ..write('model: $model, ')
+          ..write('isTracker: $isTracker, ')
+
+
+
           ..write(')'))
         .toString();
   }

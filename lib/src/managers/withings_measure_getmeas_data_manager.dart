@@ -3,32 +3,26 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsMeasureGetMeasDataManager] is a class the manages the requests related to [WithingsMeasureGetMeasData]
 class WithingsMeasureGetMeasDataManager extends WithingsDataManager {
-  WithingsMeasureGetMeasDataManager({required String accessToken})
-      : super(
-          accessToken: accessToken,
-        );
+  WithingsMeasureGetMeasDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsMeasureGetMeasData> fetch(WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret = _extractWithingsMeasureGetMeasData(response);
+    WithingsMeasureGetMeasData ret =
+        _extractWithingsMeasureGetMeasData(response);
     return ret;
   } // fetch
 
   /// A private method that extracts [WithingsMeasureGetMeasData] from the given response.
   WithingsMeasureGetMeasData _extractWithingsMeasureGetMeasData(
       dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsMeasureGetMeasData.fromJson(response);
-    } else {
-      return WithingsMeasureGetMeasData();
-    }
+    return WithingsMeasureGetMeasData.fromJson(response);
   } // _extractWithingsMeasureGetMeasData
 } // WithingsMeasureGetMeasDataManager

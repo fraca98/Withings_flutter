@@ -1,6 +1,6 @@
 name: withings_flutter
 description: A new Flutter package project.
-version: 0.0.1
+version: 1.0.4
 homepage:
 
 environment:
@@ -11,14 +11,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_web_auth: ^0.4.1
-  dio: ^4.0.6
-  logger: ^1.1.0
+  flutter_web_auth: ^0.5.0
+  dio: ^5.4.2+1
+  logger: ^2.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

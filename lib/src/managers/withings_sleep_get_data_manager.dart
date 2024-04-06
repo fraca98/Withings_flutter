@@ -3,32 +3,25 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsSleepGetDataManager] is a class the manages the requests related to [WithingsSleepGetData]
 class WithingsSleepGetDataManager extends WithingsDataManager {
-  WithingsSleepGetDataManager({required String accessToken})
-      : super(
-          accessToken: accessToken,
-        );
+  WithingsSleepGetDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsSleepGetData> fetch(WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret = _extractWithingsSleepGetData(response);
+    WithingsSleepGetData ret = _extractWithingsSleepGetData(response);
     return ret;
   } // fetch
 
   /// A private method that extracts [WithingsSleepGetData] from the given response.
   WithingsSleepGetData _extractWithingsSleepGetData(dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsSleepGetData.fromJson(response);
-    } else {
-      return WithingsSleepGetData();
-    }
+    return WithingsSleepGetData.fromJson(response);
   } // _extractWithingsSleepGetData
 }
- // WithingsSleepGetDataManager
+// WithingsSleepGetDataManager

@@ -3,22 +3,21 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsMeasureGetActivityDataManager] is a class the manages the requests related to [WithingsMeasureGetActivityData]
 class WithingsMeasureGetActivityDataManager extends WithingsDataManager {
-  WithingsMeasureGetActivityDataManager({required String accessToken})
-      : super(
-          accessToken: accessToken,
-        );
+  WithingsMeasureGetActivityDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsMeasureGetActivityData> fetch(
+      WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret = _extractWithingsMeasureGetActivityData(response);
+    WithingsMeasureGetActivityData ret =
+        _extractWithingsMeasureGetActivityData(response);
     return ret;
   } // fetch
 
@@ -60,10 +59,6 @@ class WithingsMeasureGetActivityDataManager extends WithingsDataManager {
   /// A private method that extracts [WithingsMeasureGetActivityData] from the given response.
   WithingsMeasureGetActivityData _extractWithingsMeasureGetActivityData(
       dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsMeasureGetActivityData.fromJson(response);
-    } else {
-      return WithingsMeasureGetActivityData();
-    }
+    return WithingsMeasureGetActivityData.fromJson(response);
   } // _extractWithingsMeasureGetActivityData
 } // WithingsMeasureGetActivityDataManager

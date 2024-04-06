@@ -1,21 +1,26 @@
-import 'package:withings_flutter/src/data/withingsData.dart';
+import 'package:withings_flutter/src/data/withings_data.dart';
 
 /// [WithingsSleepGetSummaryData] is a class that returns sleep activity summaries,
 /// which are an aggregation of all the data captured at high frequency during the sleep activity
 class WithingsSleepGetSummaryData implements WithingsData {
-  /// Default [WithingsSleepGetSummaryData] constructor
-  WithingsSleepGetSummaryData({this.more, this.offset});
+  /// Response status
+  int? status;
 
   /// Array of SeriesSleepGetSummary objects
   List<SeriesSleepGetSummary>? series;
 
-  /// To know if there is more data to fetch or not
+  /// To know if there are more data to fetch or not
   bool? more;
 
   /// Offset to use to retrieve the next data
   int? offset;
 
+  /// Default [WithingsSleepGetSummaryData] constructor
+  WithingsSleepGetSummaryData(
+      {this.status, this.series, this.more, this.offset});
+
   WithingsSleepGetSummaryData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     if (json['status'] == 0 && json['body'] != null) {
       if (json['body']['series'].isNotEmpty) {
         series = <SeriesSleepGetSummary>[];
@@ -31,6 +36,7 @@ class WithingsSleepGetSummaryData implements WithingsData {
   @override
   String toString() {
     return (StringBuffer('WithingsSleepGetSummaryData(')
+          ..write('status: $status, ')
           ..write('series: $series, ')
           ..write('more: $more, ')
           ..write('offset: $offset, ')
@@ -93,7 +99,7 @@ class DataSleepGetSummary {
   int? rrAverage;
   int? rrMax;
   int? rrMin;
-  double? sleepEfficiency;
+  num? sleepEfficiency;
   int? sleepLatency;
   int? sleepScore;
   int? snoring;

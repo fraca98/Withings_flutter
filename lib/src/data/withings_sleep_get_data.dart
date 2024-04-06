@@ -1,14 +1,18 @@
-import 'package:withings_flutter/src/data/withingsData.dart';
+import 'package:withings_flutter/src/data/withings_data.dart';
 
 /// [WithingsSleepGetData] is a class that returns sleep data captured at high frequency, including sleep stages
 class WithingsSleepGetData implements WithingsData {
-  /// Series SeriesSleepGet
+  /// Response status
+  int? status;
+
+  /// Array of objects SeriesSleepGet
   List<SeriesSleepGet>? series;
 
   /// Default [WithingsSleepGetData] constructor
-  WithingsSleepGetData({this.series});
+  WithingsSleepGetData({this.status, this.series});
 
   WithingsSleepGetData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     if (json['status'] == 0 && json['body'] != null) {
       if (json['body']['series'].isNotEmpty) {
         series = <SeriesSleepGet>[];
@@ -22,6 +26,7 @@ class WithingsSleepGetData implements WithingsData {
   @override
   String toString() {
     return (StringBuffer('WithingsSleepGetData(')
+          ..write('status: $status, ')
           ..write('series: $series, ')
           ..write(')'))
         .toString();
@@ -31,6 +36,12 @@ class WithingsSleepGetData implements WithingsData {
 class SeriesSleepGet {
   /// The state of sleeping
   int? state;
+
+  /// The starting datetime for the sleep state data
+  int? startdate;
+
+  /// The end datetime for the sleep data
+  int? enddate;
 
   /// Series (Heart rate)
   SeriesTimestampSleepGet? hr;
@@ -48,10 +59,19 @@ class SeriesSleepGet {
   SeriesTimestampSleepGet? rmssd;
 
   SeriesSleepGet(
-      {this.state, this.hr, this.rr, this.snoring, this.sdnn1, this.rmssd});
+      {this.state,
+      this.startdate,
+      this.enddate,
+      this.hr,
+      this.rr,
+      this.snoring,
+      this.sdnn1,
+      this.rmssd});
 
   SeriesSleepGet.fromJson(Map<String, dynamic> json) {
     state = json['state'];
+    startdate = json['startdate'];
+    enddate = json['enddate'];
     hr = json['hr'] != null
         ? SeriesTimestampSleepGet.fromJson(json['hr'])
         : null;
@@ -73,6 +93,8 @@ class SeriesSleepGet {
   String toString() {
     return (StringBuffer('SeriesSleepGet(')
           ..write('state: $state, ')
+          ..write('startdate: $startdate, ')
+          ..write('enddate: $enddate, ')
           ..write('hr: $hr, ')
           ..write('rr: $rr, ')
           ..write('snoring: $snoring, ')
@@ -92,7 +114,8 @@ class SeriesTimestampSleepGet {
   SeriesTimestampSleepGet.fromJson(Map<String, dynamic> json) {
     seriesTimestampSleepGet = <ObjSleepGet>[];
     json.forEach((key, value) {
-      seriesTimestampSleepGet?.add(ObjSleepGet(timestamp: int.parse(key), value: value));
+      seriesTimestampSleepGet
+          ?.add(ObjSleepGet(timestamp: int.parse(key), value: value));
     });
   }
 

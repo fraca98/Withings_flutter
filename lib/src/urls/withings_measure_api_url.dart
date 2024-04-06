@@ -2,7 +2,7 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsMeasureAPIURL] is a class that expresses multiple factory
 /// constructors to be used to generate Withings Web APIs urls to fetch
-/// [WithingsMeasureGetMeasData],[],[],[]
+/// [WithingsMeasureGetMeasData],[WithingsMeasureGetActivityData],[WithingsMeasureGetIntradayactivityData],[WithingsMeasureGetWorkoutsData]
 class WithingsMeasureAPIURL extends WithingsAPIURL {
   ///Default [WithingsMeasureAPIURL] constructor
   WithingsMeasureAPIURL(
@@ -22,7 +22,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     int? category,
     required int startdate,
     required int enddate,
-    int? offset,
+    //int? offset, //present in the documentation of the API, but not the field offset in the response, so removed
     required String accessToken,
   }) {
     return WithingsMeasureAPIURL(
@@ -33,7 +33,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
         'category': category,
         'startdate': startdate,
         'enddate': enddate,
-        'offset': offset,
+        //'offset': offset,
       },
       authorizationHeader: 'Bearer $accessToken',
     );
@@ -47,7 +47,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     String? meastypes,
     int? category,
     required int lastupdate,
-    int? offset,
+    //int? offset, //present in the documentation of the API, but not the field offset in the response, so removed
     required String accessToken,
   }) {
     return WithingsMeasureAPIURL(
@@ -57,13 +57,13 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
         'meastypes': meastypes,
         'category': category,
         'lastupdate': lastupdate,
-        'offset': offset,
+        //'offset': offset,
       },
       authorizationHeader: 'Bearer $accessToken',
     );
   }
 
-  /// Generates a [WithingsMeasureAPIURL] to get [] of a specific date range
+  /// Generates a [WithingsMeasureAPIURL] to get [WithingsMeasureGetActivityData] of a specific date range
   /// between [startdateymd] and [enddateymd] of a given user [accessToken], defining the data fields we want
   /// to retrieve [dataFields]. The offset [offset] is used if we have more data to retrieve
   factory WithingsMeasureAPIURL.getActivityRange({
@@ -86,7 +86,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     );
   }
 
-  /// Generates a [WithingsMeasureAPIURL] to get [] from the last time that data
+  /// Generates a [WithingsMeasureAPIURL] to get [WithingsMeasureGetActivityData] from the last time that data
   /// were updated or created after the date in [lastupdate] of a given user [accessToken], defining the data fields we want
   /// to retrieve [dataFields]. The offset [offset] is used if we have more data to retrieve
   factory WithingsMeasureAPIURL.getActivityLastupdate({
@@ -107,7 +107,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     );
   }
 
-  /// Generates a [WithingsMeasureAPIURL] to get [] of a specific date range
+  /// Generates a [WithingsMeasureAPIURL] to get [WithingsMeasureGetIntradayactivityData] of a specific date range
   /// between [startdate] and [enddate] of a given user [accessToken], defining the data fields we want
   /// to retrieve [dataFields].
   ///  - If your input startdate and enddate are separated by more than 24h, only the first 24h after startdate will be returned.
@@ -131,7 +131,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     );
   }
 
-  /// Generates a [WithingsMeasureAPIURL] to get [] of a specific date range
+  /// Generates a [WithingsMeasureAPIURL] to get [WithingsMeasureGetWorkoutsData] of a specific date range
   /// between [startdateymd] and [enddateymd] of a given user [accessToken], defining the data fields we want
   /// to retrieve [dataFields]. The offset [offset] is used if we have more data to retrieve
   factory WithingsMeasureAPIURL.getWorkoutsRange({
@@ -154,7 +154,7 @@ class WithingsMeasureAPIURL extends WithingsAPIURL {
     );
   }
 
-  /// Generates a [WithingsMeasureAPIURL] to get [] from the last time that data
+  /// Generates a [WithingsMeasureAPIURL] to get [WithingsMeasureGetWorkoutsData] from the last time that data
   /// were updated or created after the date in [lastupdate] of a given user [accessToken], defining the data fields we want
   /// to retrieve [dataFields]. The offset [offset] is used if we have more data to retrieve
   factory WithingsMeasureAPIURL.getWorkoutsLastupdate({

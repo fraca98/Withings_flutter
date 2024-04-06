@@ -1,14 +1,18 @@
-import 'package:withings_flutter/src/data/withingsData.dart';
+import 'package:withings_flutter/src/data/withings_data.dart';
 
 /// [WithingsMeasureGetIntradayactivityData] is a class that returns user activity data captured at high frequency
 class WithingsMeasureGetIntradayactivityData implements WithingsData {
+  /// Response status
+  int? status;
+
   /// List of ObjGetIntradayAcitvity
   List<ObjGetIntradayAcitvity>? series;
 
   /// Default [WithingsMeasureGetIntradayactivityData] constructor
-  WithingsMeasureGetIntradayactivityData({this.series});
+  WithingsMeasureGetIntradayactivityData({this.status, this.series});
 
   WithingsMeasureGetIntradayactivityData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     if (json['status'] == 0 && json['body'] != null) {
       if (json['body']['series'].isNotEmpty) {
         series = <ObjGetIntradayAcitvity>[];
@@ -32,7 +36,8 @@ class WithingsMeasureGetIntradayactivityData implements WithingsData {
   @override
   String toString() {
     return (StringBuffer('WithingsMeasureGetIntradayactivityData(')
-          ..write('seris:  $series, ')
+          ..write('status: $status, ')
+          ..write('series:  $series, ')
           ..write(')'))
         .toString();
   }
@@ -49,10 +54,10 @@ class ObjGetIntradayAcitvity {
   int? elevation;
 
   /// Estimation of active calories burned (in Kcal). (Use 'dataFields' to request this data)
-  int? calories;
+  num? calories;
 
   /// Distance travelled (in meters). (Use 'dataFields' to request this data)
-  int? distance;
+  num? distance;
 
   /// Number of strokes performed. (Use 'dataFields' to request this data)
   int? stroke;
@@ -67,7 +72,7 @@ class ObjGetIntradayAcitvity {
   int? heartRate;
 
   /// SpO2 measurement automatically tracked by a device tracker. (Use 'dataFields' to request this data)
-  int? spo2Auto;
+  num? spo2Auto;
 
   ObjGetIntradayAcitvity({
     this.timestamp,
@@ -84,7 +89,7 @@ class ObjGetIntradayAcitvity {
 
   @override
   String toString() {
-    return (StringBuffer('ObjGetIntradayAcitvity(')
+    return (StringBuffer('ObjGetIntradayActivity(')
           ..write('timestamp:  $timestamp, ')
           ..write('steps:  $steps, ')
           ..write('elevation:  $elevation, ')

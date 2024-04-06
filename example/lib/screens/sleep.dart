@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:withings_flutter/withings_flutter.dart';
 
 class Sleep extends StatelessWidget {
-  Sleep({super.key});
+  const Sleep({super.key});
 
-  String? accessToken = '';
+  final String? accessToken = ''; //put here the accessToken from WithingsCredentials
 
   @override
   Widget build(BuildContext context) {
@@ -13,49 +13,63 @@ class Sleep extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () async {
-            final getsleepdata =
-                await WithingsSleepGetDataManager(accessToken: 'accessToken!')
-                    .fetch(WithingsSleepAPIURL.get(
-              accessToken: accessToken!,
-              startdate: 1662425635,
-              enddate: 1662458035,
-              dataFields: 'hr,rr,snoring,sdnn_1',
-            )) as WithingsSleepGetData; // */
+            WithingsSleepGetDataManager withingsSleepGetDataManager =
+                WithingsSleepGetDataManager();
+            WithingsSleepAPIURL withingsSleepAPIURLGet =
+                WithingsSleepAPIURL.get(
+                    startdate: 1662854063,
+                    enddate: 1662900863,
+                    dataFields: 'hr,rr,snoring,sdnn_1,rmssd',
+                    accessToken: accessToken!);
+            WithingsSleepGetData getsleepdata =
+                await withingsSleepGetDataManager.fetch(withingsSleepAPIURLGet);
+            print(getsleepdata);
           },
-          child: Text('Get Sleep'),
+          child: const Text('Get Sleep'),
         ),
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
         ElevatedButton(
           onPressed: () async {
-            final getsummaryrangesleepdata =
-                await WithingsSleepGetSummaryDataManager(
-                            accessToken: accessToken!)
-                        .fetch(WithingsSleepAPIURL.getSummaryRange(
-                            accessToken: accessToken!,
-                            startdateymd: '2022-09-06',
-                            enddateymd: '2022-09-08',
-                            dataFields:
-                                'hr_average,hr_max,night_events,remsleepduration'))
-                    as WithingsSleepGetSummaryData; //Working */
+            WithingsSleepGetSummaryDataManager
+                withingsSleepGetSummaryDataManager =
+                WithingsSleepGetSummaryDataManager();
+            WithingsSleepAPIURL withingsSleepAPIURLGetSummaryRange =
+                WithingsSleepAPIURL.getSummaryRange(
+              offset: 2,
+              accessToken: accessToken!,
+              startdateymd: '2022-09-06',
+              enddateymd: '2022-09-10',
+              //dataFields:'hr_average,hr_max,night_events,remsleepduration', //necessary?
+            );
+            WithingsSleepGetSummaryData getsummaryrangesleepdata =
+                await withingsSleepGetSummaryDataManager
+                    .fetch(withingsSleepAPIURLGetSummaryRange); //Working
+            print(getsummaryrangesleepdata);
           },
-          child: Text('GetSummaryRange Sleep'),
+          child: const Text('GetSummaryRange Sleep'),
         ),
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
         ElevatedButton(
           onPressed: () async {
-            final getsummarylastupdatesleepdata =
-                await WithingsSleepGetSummaryDataManager(
-                        accessToken: accessToken!)
-                    .fetch(WithingsSleepAPIURL.getSummaryLastupdate(
-              accessToken: accessToken!,
+            WithingsSleepGetSummaryDataManager
+                withingsSleepGetSummaryDataManager =
+                WithingsSleepGetSummaryDataManager();
+            WithingsSleepAPIURL withingsSleepAPIURLGetSummaryLastUpdate =
+                WithingsSleepAPIURL.getSummaryLastupdate(
               lastupdate: 1662422035,
-            )) as WithingsSleepGetSummaryData; //Working */
+              accessToken: accessToken!,
+              //dataFields:'hr_average,hr_max,night_events,remsleepduration', //necessary?
+            ); //Working
+            WithingsSleepGetSummaryData getsummarylastupdatesleepdata =
+                await withingsSleepGetSummaryDataManager
+                    .fetch(withingsSleepAPIURLGetSummaryLastUpdate); //Working
+            print(getsummarylastupdatesleepdata);
           },
-          child: Text('GetSummaryUpdate Sleep'),
+          child: const Text('GetSummaryUpdate Sleep'),
         ),
       ],
     );

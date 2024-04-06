@@ -2,6 +2,6 @@
 /// of Withings generated data.
 abstract class WithingsData {
   /// Returns the status of a [WithingsData]
+  @override
   String toString();
-  
 } // WithingsData

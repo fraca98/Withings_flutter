@@ -1,9 +1,12 @@
 import 'dart:math';
 
-import 'package:withings_flutter/src/data/withingsData.dart';
+import 'package:withings_flutter/src/data/withings_data.dart';
 
 /// [WithingsMeasureGetMeasData] is a class that provides measures stored at a specific date
 class WithingsMeasureGetMeasData implements WithingsData {
+  /// Response status
+  int? status;
+
   /// Array of measure group
   List<Measuregrps>? measuregrps;
 
@@ -15,12 +18,14 @@ class WithingsMeasureGetMeasData implements WithingsData {
 
   /// Default [WithingsMeasureGetMeasData] constructor
   WithingsMeasureGetMeasData({
+    this.status,
     this.measuregrps,
     //this.more,
     //this.offset
   });
 
   WithingsMeasureGetMeasData.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
     if (json['status'] == 0 && json['body'] != null) {
       if (json['body']['measuregrps'].isNotEmpty) {
         measuregrps = <Measuregrps>[];
@@ -36,6 +41,7 @@ class WithingsMeasureGetMeasData implements WithingsData {
   @override
   String toString() {
     return (StringBuffer('WithingsMeasureGetMeasData(')
+          ..write('status: $status, ')
           ..write('measuregrps: $measuregrps, ')
           //..write('more: $more, ')
           //..write('offset: $offset, ')
@@ -51,36 +57,55 @@ class Measuregrps {
   /// Category for the measures in the group (see category input parameter)
   int? category;
 
-  /// Type of the measure. See meastypes input parameter
-  int? type;
-
-  /// Value for the measure in S.I. units (kilograms, meters etc...).
-  double? value;
+  /// List of single measures
+  List<SingleMeas>? measures;
 
   Measuregrps({
     this.date,
     this.category,
-    this.type,
-    this.value,
+    this.measures,
   });
 
   Measuregrps.fromJson(Map<String, dynamic> json) {
     date = json['date'];
     category = json['category'];
-    type = json['measures'][0]['type'];
-    value = json['measures'][0]['value'].toDouble() *
-        pow(10, json['measures'][0]['unit']);
+    measures = <SingleMeas>[];
+    json['measures'].forEach((v) {
+      measures?.add(SingleMeas.fromJson(v));
+    });
   }
   @override
   String toString() {
     return (StringBuffer('Measuregrps(')
           ..write('date: $date, ')
           ..write('category: $category, ')
+          ..write('measures: $measures, ')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class SingleMeas {
+  /// Type of the measure. See meastypes input parameter
+  int? type;
+
+  /// Value for the measure in S.I. units (kilograms, meters etc...).
+  double? value;
+
+  SingleMeas({this.type, this.value});
+
+  SingleMeas.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    value = json['value'].toDouble() * pow(10, json['unit']);
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SingleMeas(')
           ..write('type: $type, ')
           ..write('value: $value, ')
           ..write(')'))
         .toString();
   }
 }
-
 // more and offset no more present in the response

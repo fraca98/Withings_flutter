@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:withings_flutter/withings_flutter.dart';
 
 class Measures extends StatelessWidget {
-  Measures({super.key});
+  const Measures({super.key});
 
-  String? accessToken = '';
+  final String? accessToken = ''; //put here the accessToken from WithingsCredentials
 
   @override
   Widget build(BuildContext context) {
@@ -13,103 +13,142 @@ class Measures extends StatelessWidget {
       children: [
         ElevatedButton(
             onPressed: () async {
-              final getmeasrange = await WithingsMeasureGetMeasDataManager(
-                      accessToken: accessToken!)
-                  .fetch(WithingsMeasureAPIURL.getMeasRange(
-                startdate: 1662584112,
-                enddate: 1662630912,
-                category: 1,
+              WithingsMeasureGetMeasDataManager
+                  withingsMeasureGetMeasDataManager =
+                  WithingsMeasureGetMeasDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetMeasRange =
+                  WithingsMeasureAPIURL.getMeasRange(
+                startdate: 1662857663,
+                enddate: 1662882863,
+                //meastypes: '11', //seems not necessary and useful
+                //category: 1,
                 accessToken: accessToken!,
-                meastypes: '135,139', // ? useful
-              )) as WithingsMeasureGetMeasData; //Working
+              );
+              WithingsMeasureGetMeasData getmeasrange =
+                  await withingsMeasureGetMeasDataManager
+                      .fetch(withingsMeasureAPIURLGetMeasRange); //Working
+              print(getmeasrange);
             },
-            child: Text('GetMeasRange')),
-        SizedBox(
+            child: const Text('GetMeasRange')),
+        const SizedBox(
           width: 5,
         ),
         ElevatedButton(
             onPressed: () async {
-              final getmeasupdate = await WithingsMeasureGetMeasDataManager(
-                      accessToken: accessToken!)
-                  .fetch(WithingsMeasureAPIURL.getMeasLastupdate(
-                lastupdate: 1662389635,
+              WithingsMeasureGetMeasDataManager
+                  withingsMeasureGetMeasDataManager =
+                  WithingsMeasureGetMeasDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetMeasLastupdate =
+                  WithingsMeasureAPIURL.getMeasLastupdate(
+                lastupdate: 1662920834,
+                //meastypes: '11, 54', //seems not necessary and useful
+                //category: 1,
                 accessToken: accessToken!,
-                //meastypes: '54', // ? useful
-              )) as WithingsMeasureGetMeasData; // Working
-              //print(getmeasupdate);
+              );
+              WithingsMeasureGetMeasData getmeasupdate =
+                  await withingsMeasureGetMeasDataManager
+                      .fetch(withingsMeasureAPIURLGetMeasLastupdate); //Working
+              print(getmeasupdate);
             },
-            child: Text('GetMeasUpdate')),
+            child: const Text('GetMeasUpdate')),
         ElevatedButton(
             onPressed: () async {
-              final getactivityrange =
-                  await WithingsMeasureGetActivityDataManager(
-                              accessToken: accessToken!)
-                          .fetch(WithingsMeasureAPIURL.getActivityRange(
-                              startdateymd: '2022-09-05',
-                              enddateymd: '2022-09-05',
-                              //dataFields: 'hr_average,hr_zone_0',
-                              accessToken: accessToken!))
-                      as WithingsMeasureGetActivityData; // Working
+              WithingsMeasureGetActivityDataManager
+                  withingsMeasureGetActivityDataManager =
+                  WithingsMeasureGetActivityDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetActivityRange =
+                  WithingsMeasureAPIURL.getActivityRange(
+                      startdateymd: '2022-09-08',
+                      enddateymd: '2022-09-09',
+                      //dataFields: 'hr_average,hr_zone_0', //seems not necessary, same results
+                      //offset: ,
+                      accessToken: accessToken!);
+              WithingsMeasureGetActivityData getactivityrange =
+                  await withingsMeasureGetActivityDataManager
+                      .fetch(withingsMeasureAPIURLGetActivityRange); //Working
               print(getactivityrange);
             },
-            child: Text('GetRange activity')),
-        SizedBox(
+            child: const Text('GetRange activity')),
+        const SizedBox(
           width: 5,
         ),
         ElevatedButton(
             onPressed: () async {
-              final getactivityupate =
-                  await WithingsMeasureGetActivityDataManager(
-                          accessToken: accessToken!)
-                      .fetch(WithingsMeasureAPIURL.getActivityLastupdate(
-                lastupdate: 1662335635,
-                //dataFields: 'hr_average,hr_zone_0',
-                accessToken: accessToken!,
-              )) as WithingsMeasureGetActivityData; // Working
+              WithingsMeasureGetActivityDataManager
+                  withingsMeasureGetActivityDataManager =
+                  WithingsMeasureGetActivityDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetActivityLastupdate =
+                  WithingsMeasureAPIURL.getActivityLastupdate(
+                      lastupdate: 1662335635,
+                      //dataFields: 'hr_average,hr_zone_0', //seems not necessary, same results
+                      //offset: ,
+                      accessToken: accessToken!);
+              WithingsMeasureGetActivityData getactivityupate =
+                  await withingsMeasureGetActivityDataManager.fetch(
+                      withingsMeasureAPIURLGetActivityLastupdate); //Working
               print(getactivityupate);
             },
-            child: Text('GetUpdate activity')),
+            child: const Text('GetUpdate activity')),
         ElevatedButton(
             onPressed: () async {
-              final getintradayactivity =
-                  await WithingsMeasureGetIntradayactivityDataManager(
-                          accessToken: accessToken!)
-                      .fetch(WithingsMeasureAPIURL.getIntradayactivity(
-                startdate: 1662584112,
-                enddate: 1662630912,
-                dataFields: 'spo2_auto',
+              WithingsMeasureGetIntradayactivityDataManager
+                  withingsMeasureGetIntradayactivityDataManager =
+                  WithingsMeasureGetIntradayactivityDataManager();
+
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetIntradayactivity =
+                  WithingsMeasureAPIURL.getIntradayactivity(
                 accessToken: accessToken!,
-              )) as WithingsMeasureGetIntradayactivityData; //Working
+                startdate: 1662738923,
+                enddate: 1662746123,
+                //dataFields:
+                //'heart_rate', // Gives only these value and not all in the response
+              );
+              WithingsMeasureGetIntradayactivityData getintradayactivity =
+                  await withingsMeasureGetIntradayactivityDataManager.fetch(
+                      withingsMeasureAPIURLGetIntradayactivity); //Working
+              print(getintradayactivity);
             },
-            child: Text('GetIntradayActivity')),
+            child: const Text('GetIntradayActivity')),
         ElevatedButton(
             onPressed: () async {
-              final getworkoutrange =
-                  await WithingsMeasureGetWorkoutsDataManager(
-                              accessToken: accessToken!)
-                          .fetch(WithingsMeasureAPIURL.getWorkoutsRange(
-                              startdateymd: '2022-09-05',
-                              enddateymd: '2022-09-05',
-                              accessToken: accessToken!))
-                      as WithingsMeasureGetWorkoutsData; // Check
+              WithingsMeasureGetWorkoutsDataManager
+                  withingsMeasureGetWorkoutsDataManager =
+                  WithingsMeasureGetWorkoutsDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetWorkoutsRange =
+                  WithingsMeasureAPIURL.getWorkoutsRange(
+                accessToken: accessToken!,
+                startdateymd: '2022-09-09',
+                enddateymd: '2022-09-14',
+                //offset: , //Not necessary: use it if in the previous response more = true and insert here the value of offset
+                //dataFields: 'calories, intensity', //Not necessary
+              );
+              WithingsMeasureGetWorkoutsData getworkoutrange =
+                  await withingsMeasureGetWorkoutsDataManager
+                      .fetch(withingsMeasureAPIURLGetWorkoutsRange);
               print(getworkoutrange);
             },
-            child: Text('GetWorkoutRange')),
-        SizedBox(
+            child: const Text('GetWorkoutRange')),
+        const SizedBox(
           width: 10,
         ),
         ElevatedButton(
             onPressed: () async {
-              final getworkoutupdate =
-                  await WithingsMeasureGetWorkoutsDataManager(
-                              accessToken: accessToken!)
-                          .fetch(WithingsMeasureAPIURL.getWorkoutsLastupdate(
-                              lastupdate: 1662335635,
-                              accessToken: accessToken!))
-                      as WithingsMeasureGetWorkoutsData; // Check
+              WithingsMeasureGetWorkoutsDataManager
+                  withingsMeasureGetWorkoutsDataManager =
+                  WithingsMeasureGetWorkoutsDataManager();
+              WithingsMeasureAPIURL withingsMeasureAPIURLGetWorkoutsLastupdate =
+                  WithingsMeasureAPIURL.getWorkoutsLastupdate(
+                accessToken: accessToken!,
+                lastupdate: 1662608537,
+                //offset: , //Not necessary: use it if in the previous response more = true and insert here the value of offset
+                //dataFields: 'calories, intensity', //Not necessary
+              );
+              WithingsMeasureGetWorkoutsData getworkoutupdate =
+                  await withingsMeasureGetWorkoutsDataManager
+                      .fetch(withingsMeasureAPIURLGetWorkoutsLastupdate);
               print(getworkoutupdate);
             },
-            child: Text('GetWorkoutUpdate')),
+            child: const Text('GetWorkoutUpdate')),
       ],
     );
   }

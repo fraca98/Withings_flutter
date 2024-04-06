@@ -3,24 +3,24 @@ import 'package:withings_flutter/withings_flutter.dart';
 
 /// [WithingsHeartListDataManager] is a class the manages the requests related to [WithingsHeartListData]
 class WithingsHeartListDataManager extends WithingsDataManager {
-  WithingsHeartListDataManager({required String accessToken})
-      : super(accessToken: accessToken);
+  WithingsHeartListDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsHeartListData> fetch(WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret = _extractWithingsHeartListData(response);
+    WithingsHeartListData ret = _extractWithingsHeartListData(response);
     return ret;
   } // fetch
 
-  Future<WithingsHeartListData> fetchAutoOffset(WithingsAPIURL withingsUrl) async {
+  Future<WithingsHeartListData> fetchAutoOffset(
+      WithingsAPIURL withingsUrl) async {
     // Get the response
     final response = await getResponse(withingsUrl);
     // Debugging
@@ -55,11 +55,7 @@ class WithingsHeartListDataManager extends WithingsDataManager {
 
   /// A private method that extracts [WithingsHeartListData] from the given response.
   WithingsHeartListData _extractWithingsHeartListData(dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsHeartListData.fromJson(response);
-    } else {
-      return WithingsHeartListData();
-    }
+    return WithingsHeartListData.fromJson(response);
   } // _extractWithingsHeartListData
 }
- // WithingsHeartListDataManager
+// WithingsHeartListDataManager

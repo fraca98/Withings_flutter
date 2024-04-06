@@ -4,22 +4,20 @@ import 'package:withings_flutter/withings_flutter.dart';
 /// [WithingsMeasureGetIntradayactivityDataManager] is a class the manages the requests related to [WithingsMeasureGetintradayactivityData]
 class WithingsMeasureGetIntradayactivityDataManager
     extends WithingsDataManager {
-  WithingsMeasureGetIntradayactivityDataManager({required String accessToken})
-      : super(
-          accessToken: accessToken,
-        );
+  WithingsMeasureGetIntradayactivityDataManager();
 
   @override
-  Future<WithingsData> fetch(WithingsAPIURL withingsUrl) async {
+  Future<WithingsMeasureGetIntradayactivityData> fetch(
+      WithingsAPIURL url) async {
     // Get the response
-    final response = await getResponse(withingsUrl);
+    final response = await getResponse(url);
 
     // Debugging
     final logger = Logger();
     logger.i('$response');
 
     //Extract data and return them
-    WithingsData ret =
+    WithingsMeasureGetIntradayactivityData ret =
         _extractWithingsMeasureGetaintradayactivityData(response);
     return ret;
   } // fetch
@@ -27,10 +25,6 @@ class WithingsMeasureGetIntradayactivityDataManager
   /// A private method that extracts [WithingsMeasureGetIntradayactivityData] from the given response.
   WithingsMeasureGetIntradayactivityData
       _extractWithingsMeasureGetaintradayactivityData(dynamic response) {
-    if (response['status'] == 0) {
-      return WithingsMeasureGetIntradayactivityData.fromJson(response);
-    } else {
-      return WithingsMeasureGetIntradayactivityData();
-    }
+    return WithingsMeasureGetIntradayactivityData.fromJson(response);
   } // _extractWithingsMeasureGetaIntradayactivityData
 } // WithingsMeasureGetaIntradayactivityDataManager

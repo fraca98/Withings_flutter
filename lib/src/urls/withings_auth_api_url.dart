@@ -1,13 +1,12 @@
-import 'package:withings_flutter/src/urls/withingsAPIURL.dart';
+import 'package:withings_flutter/src/urls/withings_nohead_api_url.dart';
 
 /// [WithingsAuthAPIURL] is a class that expresses multiple factory
 /// constructors to be used to generate Withings Web APIs urls to
 /// be used by [WithingsConnector].
-class WithingsAuthAPIURL extends WithingsAPIURL {
-
+class WithingsAuthAPIURL extends WithingsNoHeadAPIURL {
   /// Default [WithingsAuthAPIURL] constructor.
   WithingsAuthAPIURL({String? url, Map<String, dynamic>? data}) {
-    // super fields
+    // super fieldss
     this.url = url;
     this.data = data;
   } // WithingsAuthAPIURL
